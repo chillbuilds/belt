@@ -1,92 +1,127 @@
+let sec = 1000
+let timeMultiplier =  2.5 // 5 
+let playDamage = false
+
 let player = {
+  health: 100,
   power: {
     solar_panel_lvl: 1,
-    power_cells: {
-      used: 2,
-      total: 2
-    },
-    use: {
-      water_reclaim: 0,
-      oxygen: 1,
-      fuel: 1,
-      farm: 0
-    }
-    
+    power_capacity: 2,
+    power_cells: 1,
+  },
+  attributes: {
+    fuel: 20,
+    oxygen: 5,
+    hunger: 75,
+    thirst: 50,
+    health: 90
   }
 }
 
 let power = player.power
+let attributes = player.attributes
 
-let powerUpdate = () => {
-  $('#solar-panel-lvl').text(power.solar_panel_lvl.toString())
-  $('#solar-panel-lvl').attr('val', power.solar_panel_lvl.toString())
-  $('#power-cell-total').text(power.power_cells.total.toString())
-  $('#power-cell-total').attr('val', power.power_cells.total.toString())
-  $('#power-cell-used').text(player.power.power_cells.used.toString())
-  $('#power-cell-used').attr('val', player.power.power_cells.used.toString())
-  $('#water-reclaim-lvl').text(player.power.use.water_reclaim.toString())
-  $('#water-reclaim-lvl').attr('val', player.power.use.water_reclaim.toString())
-  $('#oxygen-lvl').text(player.power.use.oxygen.toString())
-  $('#oxygen-lvl').attr('val', player.power.use.oxygen.toString())
-  $('#fuel-lvl').text(player.power.use.fuel.toString())
-  $('#fuel-lvl').attr('val', player.power.use.fuel.toString())
-  $('#farm-lvl').text(player.power.use.farm.toString())
-  $('#farm-lvl').attr('val', player.power.use.farm.toString())
+let gameOver = () => {
+  console.log('game over')
+}
+
+let resourceUpdate = () => {
+  $('#power-cell-total').text((power.power_cells.toString()))
+  $('#power-capacity').text((power.power_capacity.toString()))
+  $('#fuel-total').text((attributes.fuel.toString()))
+  $('#oxygen-total').text((attributes.oxygen.toString()))
+  $('#food-total').text((attributes.hunger.toString()))
+  $('#water-total').text((attributes.thirst.toString()))
+  $('#health-total').text((attributes.health.toString()))
+  if(playDamage == true){
+    damageAnim()
+    playDamage = false
+  }
 }
 
 $(document).on("contextmenu", function(e){
-  // Prevent the default right-click menu from showing
   e.preventDefault()
-  let clickedID = $(e.target).attr('id')
-  // Perform your desired actions here
-  // For example, you can display a custom context menu:
-  if(clickedID == 'water_reclaim' && power.use.water_reclaim > 0){
-    power.use.water_reclaim = power.use.water_reclaim-1
-    power.power_cells.used = power.power_cells.used-1
-    powerUpdate()
-  }
-  if(clickedID == 'oxygen' && power.use.oxygen > 0){
-    power.use.oxygen = power.use.oxygen-1
-    power.power_cells.used = power.power_cells.used-1
-    powerUpdate()
-  }
-  if(clickedID == 'fuel' && power.use.fuel > 0){
-    power.use.fuel = power.use.fuel-1
-    power.power_cells.used = power.power_cells.used-1
-    powerUpdate()
-  }
-  if(clickedID == 'farm' && power.use.farm > 0){
-    power.use.farm = power.use.farm-1
-    power.power_cells.used = power.power_cells.used-1
-    powerUpdate()
-  }
+  console.log('right clicked')
 })
+
+let damageAnim = () => {
+  $('#damageAnim').css({
+    'background': 'rgba(150, 0, 0, 0.5)'
+  })
+  setTimeout(()=>{
+    $('#damageAnim').css({
+      'background': 'rgba(150, 0, 0, 0.0)'
+    })
+  }, 200)
+}
 
 $('#power-usage').on('click', (e)=>{
   let clickedID = $(e.target).attr('id')
   let used = power.power_cells.used
   let total = power.power_cells.total
 
-  if(clickedID == 'water_reclaim' && used < total){
-    power.use.water_reclaim = power.use.water_reclaim+1
-    power.power_cells.used = power.power_cells.used+1
-    powerUpdate()
+  if(clickedID == 'water_reclaim' && power.power_cells > 0){
+    power.power_cells = power.power_cells-1
+    attributes.thirst += 30
   }
-  if(clickedID == 'oxygen' && used < total){
-    power.use.oxygen = power.use.oxygen+1
-    power.power_cells.used = power.power_cells.used+1
-    powerUpdate()
+  if(clickedID == 'oxygen' && power.power_cells > 0){
+    power.power_cells = power.power_cells-1
+    attributes.oxygen +=30
   }
-  if(clickedID == 'fuel' && used < total){
-    power.use.fuel = power.use.fuel+1
-    power.power_cells.used = power.power_cells.used+1
-    powerUpdate()
+  if(clickedID == 'fuel' && power.power_cells > 0){
+    power.power_cells = power.power_cells-1
+    attributes.fuel += 15
   }
-  if(clickedID == 'farm' && used < total){
-    power.use.farm = power.use.farm+1
-    power.power_cells.used = power.power_cells.used+1
-    powerUpdate()
+  if(clickedID == 'farm' && power.power_cells > 0){
+    power.power_cells = power.power_cells-1
+    attributes.hunger += 30
   }
 })
 
-powerUpdate()
+resourceUpdate()
+let resourceUpdateTimer = setInterval(()=>{resourceUpdate()}, 10)
+
+let powerCellTimer = setInterval(()=>{
+  if(power.power_cells < power.power_capacity){
+    power.power_cells = power.power_cells + 1
+  }
+}, ((sec * 20) * timeMultiplier) + (power.solar_panel_lvl * 0.5))
+
+let oxygenTimer = setInterval(()=>{
+  if(attributes.oxygen > 0){
+    attributes.oxygen--
+  }else{
+    if(attributes.health > 0){
+      attributes.health--
+      playDamage = true
+    }else{
+      gameOver()
+    }
+  }
+}, (sec * 1) * timeMultiplier)
+
+let hungerTimer = setInterval(()=>{
+  if(attributes.hunger > 0){
+    attributes.hunger--
+  }else{
+    if(attributes.health > 0){
+      attributes.health--
+      playDamage = true
+    }else{
+      gameOver()
+    }
+  }
+}, (sec * 5) * timeMultiplier)
+
+let thirstTimer = setInterval(()=>{
+  if(attributes.thirst > 0){
+    attributes.thirst--
+  }else{
+    if(attributes.health > 0){
+      attributes.health--
+      playDamage = true
+    }else{
+      gameOver()
+    }
+  }
+}, (sec * 2) * timeMultiplier)

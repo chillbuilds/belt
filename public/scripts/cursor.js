@@ -21,7 +21,7 @@ $cursor.css({
 
 // Hide the default cursor using CSS
 $('html, body').css({
-    // 'cursor': 'none'
+    'cursor': 'none'
 })
 
 // Update the position of the image element on mousemove

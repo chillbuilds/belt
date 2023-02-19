@@ -1,4 +1,11 @@
-html body {
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../assets/fonts/ailerons.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+body {
     background-image: url("../assets/images/background.png");
     background-color: #CFD8DC;
     background-size: cover;
@@ -11,6 +18,7 @@ html body {
     -webkit-user-select: none;
     user-select: none;
     width: 100%;
+    font-family: 'MyCustomFont', sans-serif;
 }
 
 #power-center {
@@ -23,7 +31,7 @@ html body {
 .cell {
     position: relative;
     margin: 1%;
-    padding: 4%;
+    padding: 7%;
     background: rgba(0, 0, 0, 0.3);
     font-size: 32px;
 }
@@ -35,6 +43,29 @@ html body {
     padding: 18% 30%;
     /* width: 50%; */
     background: #03091E;
+}
+
+#resource-totals {
+    position: absolute;
+    margin-top: 40%;
+    margin-left: 5%;
+    font-size: 32px;
+}
+
+.resource-total {
+    position: relative;
+    float: left;
+    padding: 3% 5%;
+}
+
+#damageAnim {
+    background: none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    /* z-index: 9998; */
 }
 
 /* palette ideas:

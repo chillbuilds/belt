@@ -9,15 +9,25 @@
 </head>
 <body>
     
+    <div id="damageAnim"></div>
+
     <div id="power-center">
         <div class="cell" id="solar-panels">solar panel level: <span id="solar-panel-lvl" val="0"></span></div> <!-- upgradable and offsets power usage-->
-        <div class="cell" id="power-cells">cells total: <span id="power-cell-total" val="0"></span>   used: <span id="power-cell-used" val="3"></span></div>
         <span id="power-usage">
-            <div class="cell" id="water_reclaim">water reclaim: <span id="water-reclaim-lvl" val="0"></span></div>
-            <div class="cell" id="oxygen">oxygen: <span id="oxygen-lvl" val="0"></span></div>
-            <div class="cell" id="fuel">fuel: <span id="fuel-lvl" val="0"></span></div>
-            <div class="cell" id="farm">farm: <span id="farm-lvl" val="0"></span></div>
+            <div class="cell" id="water_reclaim">water reclaim</div>
+            <div class="cell" id="oxygen">oxygen</div>
+            <div class="cell" id="fuel">fuel</div>
+            <div class="cell" id="farm">farm</div>
         </span>
+    </div>
+
+    <div id="resource-totals">
+        <div class="resource-total">power cells: <span id="power-cell-total"></span>/<span id="power-capacity"></span></div>
+        <div class="resource-total">fuel: <span id="fuel-total"></span></div>
+        <div class="resource-total">o2: <span id="oxygen-total"></span></div>
+        <div class="resource-total">hunger: <span id="food-total"></span></div>
+        <div class="resource-total">thirst: <span id="water-total"></span></div>
+        <div class="resource-total">health: <span id="health-total"></span></div>
     </div>
 
     <div id="player-window"></div>
