@@ -13,6 +13,10 @@ module.exports = function () {
     //     res.json(JSON.stringify())
     // })
     app.listen(port, () => {
-        console.log('server started')
+        if(port == 8080){
+            console.log('\nhttp://localhost:8080/\n')
+        }else{
+            console.log('server started on port ' + port)
+        }
     })
 }

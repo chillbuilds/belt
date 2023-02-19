@@ -1,0 +1,47 @@
+html body {
+    background-image: url("../assets/images/background.png");
+    background-color: #CFD8DC;
+    background-size: cover;
+    position: absolute;
+    z-index: 9999;
+    /* pointer-events: none; */
+    overflow: hidden;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 100%;
+}
+
+#power-center {
+    position: absolute;
+    margin-left: 5%;
+    margin-top: 5%;
+    width: 25%;
+}
+
+.cell {
+    position: relative;
+    margin: 1%;
+    padding: 4%;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 32px;
+}
+
+#player-window {
+    position: absolute;
+    margin-left: 34%;
+    margin-top: 5%;
+    padding: 18% 30%;
+    /* width: 50%; */
+    background: #03091E;
+}
+
+/* palette ideas:
+#CE4760 - redish alarm
+
+
+
+
+
+*/
